@@ -1,0 +1,27 @@
+# [START swagger]
+swagger: "2.0"
+info:
+  description: "A simple Google Cloud Endpoints API example."
+  title: "Endpoints Example"
+  version: "1.0.0"
+host: "payments.api.vavato.com"
+x-google-endpoints:
+  - name: "payments.api.vavato.com"
+    target: 104.155.43.179
+# [END swagger]
+consumes:
+- "application/json"
+produces:
+- "application/json"
+schemes:
+# Uncomment the next line if you configure SSL for this API.
+- "https"
+- "http"
+paths:
+  "/health_check":
+    get:
+      description: "Health check endpoint for the payments api"
+      operationId: payments-api-health-check
+      responses:
+        200:
+          description: "Great success!!!"

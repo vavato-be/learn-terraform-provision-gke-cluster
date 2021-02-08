@@ -1,2 +1,3 @@
-project_id = "REPLACE_ME"
-region     = "us-central1"
+#project_id = "cloud-dev-304205"
+project_id = "vavato-website"
+region = "europe-west1"
