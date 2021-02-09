@@ -50,6 +50,7 @@ resource "google_container_node_pool" "primary_nodes" {
       "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/monitoring",
       "https://www.googleapis.com/auth/service.management", # Cloud Endpoints
+      "https://www.googleapis.com/auth/servicecontrol", # Fixes https://github.com/GoogleCloudPlatform/java-docs-samples/issues/873
       "https://www.googleapis.com/auth/devstorage.read_only", # Container registry
     ]
 
