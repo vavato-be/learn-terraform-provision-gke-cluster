@@ -20,6 +20,8 @@ schemes:
 paths:
   "/echo":
     post:
+      security:
+        - your_custom_auth_id: []
       description: "Echo back a given message."
       operationId: "echo"
       produces:
@@ -36,8 +38,7 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/echoMessage"
-#      security:
-#      - api_key: []
+
 definitions:
   echoMessage:
     type: "object"
@@ -50,3 +51,13 @@ definitions:
         type: "string"
       email:
         type: "string"
+
+securityDefinitions:
+  your_custom_auth_id:
+    authorizationUrl: ""
+    flow: "implicit"
+    type: "oauth2"
+    x-google-issuer: "vavato"
+    x-google-jwks_uri: "https://storage.googleapis.com/cloud-endpoints-auth-key/jwks.json"
+    # Optional. Replace YOUR-CLIENT-ID with your client ID
+#    x-google-audiences: "some-aud"
