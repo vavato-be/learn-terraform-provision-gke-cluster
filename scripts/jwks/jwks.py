@@ -8,8 +8,10 @@ from authlib.jose import JsonWebKey
 
 
 def jwks_format(public_key):
-    key = JsonWebKey.import_key(public_key, {'kty': 'RSA'})
+    key_type = 'RSA'
+    key = JsonWebKey.import_key(public_key, {'kty': key_type})
     key['kid'] = str(datetime.datetime.utcnow())
+    key['kty'] = key_type
 
     return {
         "keys": [key]
