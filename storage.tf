@@ -14,7 +14,8 @@ resource "google_storage_bucket" "bucket" {
 resource "google_storage_bucket_object" "object" {
 # TODO: Doesn't work... "Error creating ObjectAccessControl: googleapi: got HTTP response code 404 with body: Not Found"
 #  name = "keys/jwt-key.pub"
-  name = "jwt-key.pub"
+
+  name = "jwks.json"
   bucket = google_storage_bucket.bucket.name
-  source = "keys/jwt-key.pub"
+  source = "scripts/jwks/jwks.json"
 }
