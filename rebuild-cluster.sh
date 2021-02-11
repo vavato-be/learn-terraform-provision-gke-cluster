@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+set -o xtrace
+
+# Probably shouldn't be exported
+export GH_USER="tonsv2"
+export GH_REPO="git@github.com:vavato-be/gitops-test-andreas.git"
+
+which terraform || exit
+which gcloud || exit
+which pip || exit
+which kubectl || exit
+which http || exit
+which helm || exit
+which fluxctl || exit
+
 terraform destroy -auto-approve
 
 # Undelete endpoints services
