@@ -43,24 +43,24 @@ curl --fail "$(terraform output -raw pub-key)" || exit
 # Kubectl configuration
 gcloud container clusters get-credentials vavato-website-terraform --region europe-west1
 
-
 ## Deployment should be kept separate but is included here for ease of testing
-# Deploy echo
-(
-  cd ../ruby-docs-samples/endpoints/getting-started/ || exit
-  kubectl create namespace cloud-endpoints
-  kubectl apply --namespace cloud-endpoints -f deployment.yaml
-)
+# Flux
+kubectl create namespace flux
 
-# Get bearer token
-cd scripts/token/ || exit
-rm -rf venv/ __pycache__/
-virtualenv venv
-source venv/bin/activate
-pip install -r requirements.txt
-TOKEN=$(./get_token.py)
-deactivate
-cd - || exit
+fluxctl install \
+  --git-user=$GH_USER \
+  --git-email=$GH_USER@users.noreply.github.com \
+  --git-url=$GH_REPO \
+  --git-path=namespaces,workloads,releases \
+  --namespace=flux | kubectl apply -f -
+
+helm upgrade -i helm-operator fluxcd/helm-operator --namespace flux --set helm.versions=v3
+
+fluxctl identity --k8s-fwd-ns flux
+
+read -p "Please add the above key... GitHub -> Settings -> Deploy keys"
+
+fluxctl sync --k8s-fwd-ns flux
 
 # Request
 # sleep until external ip is assigned
@@ -72,5 +72,16 @@ while [ -z "$ip" ]; do
 done
 echo "IP: $ip"
 
-sleep 3
+# Get bearer token
+cd scripts/token/ || exit
+rm -rf venv/ __pycache__/
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt
+TOKEN=$(./get_token.py)
+echo $TOKEN
+deactivate
+cd - || exit
+
+sleep 5
 echo '{"message":"Vavato rocks!"}' | http --verify=no https://echo.api.vavato.com/echo "Authorization: Bearer $TOKEN"
