@@ -59,14 +59,17 @@ fluxctl install \
 
 helm upgrade -i helm-operator fluxcd/helm-operator --namespace flux --set helm.versions=v3
 
+sleep 15
 fluxctl identity --k8s-fwd-ns flux
 
-read -p "Please add the above key... GitHub -> Settings -> Deploy keys"
+read -p "Add the above key... GitHub -> Settings -> Deploy keys"
 
 fluxctl sync --k8s-fwd-ns flux
 
 # Request
 # sleep until external ip is assigned
+# TODO: Don't loop forever, only do x tries
+sleep 10
 ip=""
 while [ -z "$ip" ]; do
   echo "Waiting for external IP"
