@@ -3,9 +3,11 @@
 set -o xtrace
 set -e
 
-# Probably shouldn't be exported
-export GH_USER="tonsv2"
-export GH_REPO="git@github.com:vavato-be/gitops-test-andreas.git"
+# TODO: Import using source
+#PROJECT_ID=cloud-dev-304205
+PROJECT_ID=vavato-website
+GH_USER="tonsv2"
+GH_REPO="git@github.com:vavato-be/gitops-test-andreas.git"
 
 which terraform || exit
 which gcloud || exit
