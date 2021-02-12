@@ -20,7 +20,7 @@ which fluxctl || exit
 terraform destroy -auto-approve
 
 # Undelete endpoints services
-find openapi/ -type f -name "*.yaml" -exec sh -c 'gcloud endpoints services undelete "$(yq -r '.host' $1)"' - {} \;
+find openapi/ -type f -name "*.yaml" -exec sh -c 'gcloud --project $PROJECT_ID endpoints services undelete "$(yq -r '.host' $1)"' - {} \;
 
 # Generate private and public keys
 (
@@ -44,7 +44,7 @@ terraform apply -auto-approve
 curl --fail "$(terraform output -raw pub-key)" || exit
 
 # Kubectl configuration
-gcloud container clusters get-credentials vavato-website-terraform --region europe-west1
+gcloud --project $PROJECT_ID container clusters get-credentials "$(terraform output -raw cluster_name)" --region "$(terraform output -raw region)"
 
 ## Deployment should be kept separate but is included here for ease of testing
 # Flux
