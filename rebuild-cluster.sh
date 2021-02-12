@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -o xtrace
+set -e
 
 # Probably shouldn't be exported
 export GH_USER="tonsv2"
