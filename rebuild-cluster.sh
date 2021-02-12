@@ -91,3 +91,4 @@ cd - || exit
 
 sleep 5
 echo '{"message":"Vavato rocks!"}' | http --verify=no https://echo.api.vavato.com/echo "Authorization: Bearer $TOKEN"
+http --verify=no https://payments.api.vavato.com/health_check
