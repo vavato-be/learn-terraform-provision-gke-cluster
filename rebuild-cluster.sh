@@ -89,6 +89,7 @@ echo $TOKEN
 deactivate
 cd - || exit
 
-sleep 5
+sleep 10
 echo '{"message":"Vavato rocks!"}' | http --verify=no https://echo.api.vavato.com/echo "Authorization: Bearer $TOKEN"
 http --verify=no https://payments.api.vavato.com/health_check
+http --verify=no https://auth-proxy.api.vavato.com/auth/jwks
