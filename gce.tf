@@ -9,3 +9,9 @@ resource "google_endpoints_service" "payments_service" {
   project = var.project_id
   openapi_config = file("openapi/payments.yaml")
 }
+
+resource "google_endpoints_service" "auth-proxy_service" {
+  service_name = "auth-proxy.api.vavato.com"
+  project = var.project_id
+  openapi_config = file("openapi/auth.yaml")
+}

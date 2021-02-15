@@ -1,0 +1,52 @@
+# [START swagger]
+swagger: "2.0"
+info:
+  description: "A simple Google Cloud Endpoints API example."
+  title: "Endpoints Example"
+  version: "1.0.0"
+host: "auth-proxy.api.vavato.com"
+x-google-endpoints:
+  - name: "auth-proxy.api.vavato.com"
+    target: 34.78.58.253
+# [END swagger]
+consumes:
+- "application/json"
+produces:
+- "application/json"
+schemes:
+- "https"
+- "http"
+paths:
+  "/auth/jwks":
+    get:
+      description: JSON Web Key Set
+      operationId: auth-proxy-jwks
+      responses:
+        200:
+          description: Great success!!!
+  "/auth/issue_token":
+    post:
+      summary: Issue token
+      description: Takes ... and returns a jwt
+      operationId: auth-proxy-issue_token
+#      parameters:
+#        - in: header
+#          name: client
+#          schema:
+#            type: string
+#          required: true
+#        - in: header
+#          name: access_token
+#          schema:
+#            type: string
+#          required: true
+#        - in: header
+#          name: uid
+#          schema:
+#            type: string
+#          required: true
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
