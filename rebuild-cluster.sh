@@ -4,8 +4,8 @@ set -o xtrace
 set -e
 
 # TODO: Import using source
-#PROJECT_ID=cloud-dev-304205
-PROJECT_ID=vavato-website
+#export PROJECT_ID=cloud-dev-304205
+export PROJECT_ID=vavato-website
 GH_USER="tonsv2"
 GH_REPO="git@github.com:vavato-be/gitops-test-andreas.git"
 
