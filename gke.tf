@@ -14,7 +14,7 @@ variable "gke_num_nodes" {
 }
 
 variable "machine_type" {
-  default = "n1-standard-2"
+  default = "n1-standard-4"
 }
 
 # GKE cluster
