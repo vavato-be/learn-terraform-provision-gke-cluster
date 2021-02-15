@@ -74,7 +74,7 @@ ip=""
 while [ -z "$ip" ]; do
   echo "Waiting for external IP"
   ip=$(kubectl get --namespace cloud-endpoints svc/esp-echo --template="{{range .status.loadBalancer.ingress}}{{.ip}}{{end}}")
-  [ -z "$ip" ] && sleep 1
+  [ -z "$ip" ] && sleep 3
 done
 echo "IP: $ip"
 
