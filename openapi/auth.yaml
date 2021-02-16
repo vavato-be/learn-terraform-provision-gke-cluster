@@ -4,9 +4,9 @@ info:
   description: "A simple Google Cloud Endpoints API example."
   title: "Endpoints Example"
   version: "1.0.0"
-host: "auth-proxy.api.vavato.com"
+host: "auth-proxy-api.vavato.com"
 x-google-endpoints:
-  - name: "auth-proxy.api.vavato.com"
+  - name: "auth-proxy-api.vavato.com"
     target: 34.78.58.253
 # [END swagger]
 consumes:

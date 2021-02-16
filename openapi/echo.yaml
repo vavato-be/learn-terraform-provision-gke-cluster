@@ -4,9 +4,9 @@ info:
   description: "A simple Google Cloud Endpoints API example."
   title: "Endpoints Example"
   version: "1.0.0"
-host: "echo.api.vavato.com"
+host: "echo-api.vavato.com"
 x-google-endpoints:
-  - name: "echo.api.vavato.com"
+  - name: "echo-api.vavato.com"
     target: 35.205.162.246
 # [END swagger]
 consumes:
@@ -58,6 +58,8 @@ securityDefinitions:
     flow: "implicit"
     type: "oauth2"
     x-google-issuer: "vavato"
-    x-google-jwks_uri: "https://storage.googleapis.com/cloud-endpoints-auth-key/jwks.json"
+    # TODO: Should be https
+    #x-google-jwks_uri: "https://auth-proxy-api.vavato.com/auth/jwks"
+    x-google-jwks_uri: "http://auth-proxy-api.vavato.com/auth/jwks"
     # Optional. Replace YOUR-CLIENT-ID with your client ID
-#    x-google-audiences: "some-aud"
+    x-google-audiences: "https://vavato.com"
