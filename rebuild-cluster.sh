@@ -9,7 +9,6 @@ set +o allexport
 
 which terraform || exit
 which gcloud || exit
-which pip || exit
 which kubectl || exit
 which http || exit
 which helm || exit
