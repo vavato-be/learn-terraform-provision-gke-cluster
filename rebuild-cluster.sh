@@ -22,26 +22,7 @@ terraform destroy -auto-approve
 # Undelete endpoints services
 find openapi/ -type f -name "*.yaml" -exec sh -c 'gcloud --project $PROJECT_ID endpoints services undelete "$(yq -r '.host' $1)"' - {} \;
 
-# Generate private and public keys
-(
-  cd scripts/keys || exit
-  ./gen_keys.sh
-)
-
-# Generate jwks
-(
-  cd scripts/jwks || exit
-  rm -rf venv/ __pycache__/
-  virtualenv venv
-  source venv/bin/activate
-  pip install -r requirements.txt
-  ./jwks.py ../keys/jwt-key.pub >jwks.json
-  deactivate
-)
-
 terraform apply -auto-approve
-
-curl --fail "$(terraform output -raw pub-key)" || exit
 
 # Kubectl configuration
 gcloud --project $PROJECT_ID container clusters get-credentials "$(terraform output -raw cluster_name)" --region "$(terraform output -raw region)"
@@ -77,17 +58,6 @@ while [ -z "$ip" ]; do
   [ -z "$ip" ] && sleep 3
 done
 echo "IP: $ip"
-
-# Get bearer token
-cd scripts/token/ || exit
-rm -rf venv/ __pycache__/
-virtualenv venv
-source venv/bin/activate
-pip install -r requirements.txt
-TOKEN=$(./get_token.py)
-echo $TOKEN
-deactivate
-cd - || exit
 
 sleep 10
 echo '{"message":"Vavato rocks!"}' | http --verify=no https://echo.api.vavato.com/echo "Authorization: Bearer $TOKEN"

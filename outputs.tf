@@ -21,7 +21,3 @@ output "cluster_host" {
 output "configure-kubectl" {
   value = "gcloud container clusters get-credentials ${google_container_cluster.primary.name} --region ${var.region}"
 }
-
-output "pub-key" {
-  value = "https://storage.googleapis.com/${google_storage_bucket.bucket.name}/${google_storage_bucket_object.object.name}"
-}
