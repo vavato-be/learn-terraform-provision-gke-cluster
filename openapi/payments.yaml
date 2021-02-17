@@ -27,6 +27,15 @@ paths:
       responses:
         200:
           description: "Great success!!!"
+  "/bank_transactions":
+    get:
+      security:
+        - your_custom_auth_id: []
+      description: "bank_transactions"
+      operationId: payments-api-bank_transactions
+      responses:
+        200:
+          description: "Great success!!!"
 
 securityDefinitions:
   your_custom_auth_id:
