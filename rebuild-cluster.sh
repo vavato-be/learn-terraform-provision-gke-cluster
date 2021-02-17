@@ -47,14 +47,19 @@ fluxctl sync --k8s-fwd-ns flux
 # Request
 # sleep until external ip is assigned
 # TODO: Don't loop forever, only do x tries
-sleep 10
-ip=""
-while [ -z "$ip" ]; do
-  echo "Waiting for external IP"
-  ip=$(kubectl get --namespace cloud-endpoints svc/esp-echo --template="{{range .status.loadBalancer.ingress}}{{.ip}}{{end}}")
-  [ -z "$ip" ] && sleep 10
-done
-echo "IP: $ip"
+function wait_for_ip() {
+  ip=""
+  while [ -z "$ip" ]; do
+    echo "Waiting for external IP on $1:$2"
+    ip=$(kubectl get --namespace $1 $2 --template="{{range .status.loadBalancer.ingress}}{{.ip}}{{end}}")
+    [ -z "$ip" ] && sleep 10
+  done
+  echo "IP: $ip"
+}
+
+wait_for_ip cloud-endpoints svc/esp-echo
+wait_for_ip prod svc/auth-proxy
+wait_for_ip prod svc/payments-api
 
 sleep 10
 
