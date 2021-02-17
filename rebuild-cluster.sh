@@ -63,9 +63,9 @@ sign_in_headers=$(echo "{\"email\": \"$VAVATO_USER\", \"password\": \"$VAVATO_PA
 uid=$(echo "$sign_in_headers" | yq -r '.uid')
 access_token=$(echo "$sign_in_headers" | yq -r '."access-token"')
 client=$(echo "$sign_in_headers" | yq -r '.client')
-TOKEN=$(http --verify=no post http://auth-proxy-api.vavato.com/auth/issue_token "client: $client" "access-token: $access_token" "uid: $uid" | jq -r '.access_token')
+TOKEN=$(http post http://auth-proxy-api.vavato.com/auth/issue_token "client: $client" "access-token: $access_token" "uid: $uid" | jq -r '.access_token')
 
 # Test endpoints
-echo '{"message":"Vavato rocks!"}' | http --verify=no https://echo-api.vavato.com/echo "Authorization: Bearer $TOKEN"
-http --verify=no https://payments-api.vavato.com/health_check "Authorization: Bearer $TOKEN"
-http --verify=no https://auth-proxy-api.vavato.com/auth/jwks
+echo '{"message":"Vavato rocks!"}' | http https://echo-api.vavato.com/echo "Authorization: Bearer $TOKEN"
+http https://payments-api.vavato.com/health_check "Authorization: Bearer $TOKEN"
+http https://auth-proxy-api.vavato.com/auth/jwks
