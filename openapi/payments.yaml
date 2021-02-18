@@ -37,6 +37,36 @@ paths:
         200:
           description: "Great success!!!"
 
+  "/credit_notes":
+    get:
+      security:
+        - your_custom_auth_id: []
+      description: "credit_notes"
+      operationId: payments-api-credit_notes
+      responses:
+        200:
+          description: "Great success!!!"
+
+  "/payment_requests/unpaid":
+    get:
+      security:
+        - your_custom_auth_id: []
+      description: "payment_requests/unpaid"
+      operationId: payments-api-payment_requests/unpaid
+      responses:
+        200:
+          description: "Great success!!!"
+
+  "/admin/payment_requests":
+    get:
+      security:
+        - your_custom_auth_id: []
+      description: "payment_requests"
+      operationId: payments-api-payment_requests
+      responses:
+        200:
+          description: "Great success!!!"
+
 securityDefinitions:
   your_custom_auth_id:
     authorizationUrl: ""
