@@ -61,8 +61,6 @@ wait_for_ip cloud-endpoints svc/esp-echo
 wait_for_ip prod svc/auth-proxy
 wait_for_ip prod svc/payments-api
 
-sleep 10
-
 # Get jwt token
 sign_in_headers=$(echo "{\"email\": \"$VAVATO_USER\", \"password\": \"$VAVATO_PASS\"}" | http https://api.vavato.com//auth/sign_in --headers | sed 1d)
 uid=$(echo "$sign_in_headers" | yq -r '.uid')
@@ -72,5 +70,16 @@ TOKEN=$(http post http://auth-proxy-api.vavato.com/auth/issue_token "client: $cl
 
 # Test endpoints
 echo '{"message":"Vavato rocks!"}' | http https://echo-api.vavato.com/echo "Authorization: Bearer $TOKEN"
-http https://payments-api.vavato.com/health_check "Authorization: Bearer $TOKEN"
+
 http https://auth-proxy-api.vavato.com/auth/jwks
+
+# 200
+http https://payments-api.vavato.com/health_check "Authorization: Bearer $TOKEN"
+http https://payments-api.vavato.com/bank_transactions "Authorization: Bearer $TOKEN" "Api-Version: v1"
+
+# 500
+http https://payments-api.vavato.com/admin/payment_requests "Authorization: Bearer $TOKEN" "Api-Version: v1"
+http https://payments-api.vavato.com/payment_requests/unpaid "Authorization: Bearer $TOKEN" "Api-Version: v1"
+
+# 404
+http https://payments-api.vavato.com/credit_notes "Authorization: Bearer $TOKEN" "Api-Version: v1"
